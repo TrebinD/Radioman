@@ -1,135 +1,78 @@
 package ru.netology.domain;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
     Radio radio = new Radio();
 
-    @Test
-    public void numberStation(){
-        int expected = 4;
-        radio.setNumStation(expected);
-        assertEquals(expected,radio.getNumStation());
-    }
-
-    @Test
-    public void minNumberStation(){
-        int expected = 0;
-        radio.setNumStation(expected);
-        assertEquals(expected,radio.getNumStation());
-    }
-
-    @Test
-    public void maxNumberStation(){
-        int expected = 9;
-        radio.setNumStation(expected);
-        assertEquals(expected,radio.getNumStation());
-    }
-
-    @Test
-    public void upLimitNumberStation(){
-        int expected = 10;
-        radio.setNumStation(expected);
-        assertEquals(0,radio.getNumStation());
-    }
-
-    @Test
-    public void downLimitNumberStation(){
-        int expected = -1;
-        radio.setNumStation(expected);
-        assertEquals(0,radio.getNumStation());
+    @ParameterizedTest
+    @CsvSource(value = {" 'Number Station',4,4",
+            " 'Min Number Station',0,0",
+            " 'Max Number Station',9,9",
+            " 'Up Limit Number Station', 10,0",
+            " 'Down Limit Number Station', -1,0"})
+    public void numberStation(String name, int incomingData, int expected) {
+        radio.setNumStation(incomingData);
+        int actual = radio.getNumStation();
+        assertEquals(expected, actual);
     }
 
 
-    @Test
-    public void upLimitNextStation(){
-        radio.setNumStation(9);
-        int expected = 0;
+    @ParameterizedTest
+    @CsvSource(value = {" 'Up Limit Next Station',9,0",
+            " 'NextStation',0,1 "})
+    public void nextStation(String name, int incomingData, int expected) {
+        radio.setNumStation(incomingData);
         radio.setNextStation();
-        assertEquals(expected,radio.getNumStation());
+        int actual = radio.getNumStation();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void nextStation(){
-        radio.setNumStation(0);
-        int expected = 1;
-        radio.setNextStation();
-        assertEquals(expected,radio.getNumStation());
-    }
-
-    @Test
-    public void downLimitPrevStation(){
-        radio.setNumStation(0);
-        int expected = 9;
+    @ParameterizedTest
+    @CsvSource(value = {" 'PrevStation',9,8",
+            " 'Down Limit Next Station',0,9 "})
+    public void prevStation(String name, int incomingData, int expected) {
+        radio.setNumStation(incomingData);
         radio.setPrevStation();
-        assertEquals(expected,radio.getNumStation());
+        int actual = radio.getNumStation();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void prevStation(){
-        radio.setNumStation(9);
-        int expected = 8;
-        radio.setPrevStation();
-        assertEquals(expected,radio.getNumStation());
+    @ParameterizedTest
+    @CsvSource(value = {" 'Level Volume',5,5",
+            " 'Min Border Volume',-1,0",
+            " 'Max Border Volume',11,10",
+    })
+    public void levelVolume(String name, int incomingData, int expected) {
+        radio.setVolumeStation(incomingData);
+        int actual = radio.getVolume();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void levelVolume(){
-        int expected = 5;
-        radio.setVolumeStation(5);
-        assertEquals(expected,radio.getVolume());
-    }
 
-    @Test
-    public void minBorderVolume(){
-        int expected = 0;
-        radio.setVolumeStation(-1);
-        assertEquals(expected,radio.getVolume());
-    }
-
-    @Test
-    public void maxBorderVolume(){
-                int expected = 10;
-        radio.setVolumeStation(11);
-        assertEquals(expected,radio.getVolume());
-    }
-    @Test
-    public void minLevelVolume(){
-        radio.setVolumeStation(0);
-        int expected = 0;
-
+    @ParameterizedTest
+    @CsvSource(value = {" 'Min Level Volume',0,0",
+            " 'Down Level Volume',6,5"
+    })
+    public void minLevelVolume(String name, int incomingData, int expected) {
+        radio.setVolumeStation(incomingData);
         radio.setMinLevelVolume();
-        assertEquals(expected,radio.getVolume());
+        int actual = radio.getVolume();
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void downLevelVolume(){
-        radio.setVolumeStation(6);
-        int expected = 5;
-
-        radio.setMinLevelVolume();
-        assertEquals(expected,radio.getVolume());
-    }
-
-    @Test
-    public void maxLevelVolume(){
-        radio.setVolumeStation(11);
-        int expected = 10;
-
+    @ParameterizedTest
+    @CsvSource(value = {" 'Max Level Volume',11,10",
+            " 'Up Level Volume',5,6"
+    })
+    public void maxLevelVolume(String name, int incomingData, int expected) {
+        radio.setVolumeStation(incomingData);
         radio.setMaxLevelVolume();
-        assertEquals(expected,radio.getVolume());
+        int actual = radio.getVolume();
+        assertEquals(expected, actual);
     }
-
-    @Test
-    public void upLevelVolume(){
-        radio.setVolumeStation(5);
-        int expected = 6;
-
-        radio.setMaxLevelVolume();
-        assertEquals(expected,radio.getVolume());
-    }
-
-
 }

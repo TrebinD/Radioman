@@ -12,9 +12,11 @@ public class Radio {
 
     public void setNumStation(int numStation) {
         if (numStation < 0) {
+            numStation = 0;
             return;
         }
         if (numStation > 9) {
+            numStation = 0;
             return;
         }
         this.numStation = numStation;
@@ -52,7 +54,7 @@ public class Radio {
             this.volume = 0;
             return;
         }
-            this.volume = volume;
+        this.volume = volume;
 
     }
 
