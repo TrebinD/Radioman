@@ -4,27 +4,37 @@ public class Radio {
 
     private int numStation;
     private int volume;
+    private int maxNumberStation = 9;
+    private final int minNumberStation = 0;
+    private final int minVolume = 0;
+    private final int maxVolume = 100;
 
+
+    public Radio() {
+    }
+
+    public Radio(int maxNumberStation) {
+        this.maxNumberStation = maxNumberStation - 1;
+    }
 
     public int getNumStation() {
         return numStation;
     }
 
     public void setNumStation(int numStation) {
-        if (numStation < 0) {
-            numStation = 0;
+        if (numStation > maxNumberStation) {
+            this.numStation = maxNumberStation;
             return;
         }
-        if (numStation > 9) {
-            numStation = 0;
+        if (numStation < minNumberStation) {
             return;
         }
         this.numStation = numStation;
     }
 
     public void setNextStation() {
-        if (numStation == 9) {
-            numStation = 0;
+        if (numStation >= maxNumberStation) {
+            numStation = minNumberStation;
             return;
         }
         numStation++;
@@ -32,8 +42,8 @@ public class Radio {
     }
 
     public void setPrevStation() {
-        if (numStation == 0) {
-            numStation = 9;
+        if (numStation <= minNumberStation) {
+            numStation = maxNumberStation;
             return;
         }
         numStation--;
@@ -45,32 +55,31 @@ public class Radio {
         return volume;
     }
 
-    public void setVolumeStation(int volume) {
-        if (volume > 10) {
-            this.volume = 10;
+    public void setVolume(int volume) {
+        if (volume > maxVolume) {
+            this.volume = maxVolume;
             return;
         }
-        if (volume < 0) {
-            this.volume = 0;
+        if (volume < minVolume) {
+            this.volume = minVolume;
             return;
         }
         this.volume = volume;
-
     }
 
+
     public void setMinLevelVolume() {
-        if (this.volume == 0) {
+        if (volume == minVolume) {
             return;
         }
         this.volume--;
     }
 
     public void setMaxLevelVolume() {
-        if (this.volume == 10) {
-            this.volume = 10;
+        if (volume == maxVolume) {
             return;
         }
-        this.volume++;
+        volume++;
     }
 
 
